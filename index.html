@@ -1,1 +1,168 @@
-Hello World
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Decision Trees example</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Decision Trees example">
+  <meta name="author" content="Maria Bravo (based on material shown in &quot;Data Mining and Business Analytics with R&quot; Ledolter(2013))">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/datascience.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Decision Trees example</h1>
+    <h2>Working with the Prostate cancer dataset</h2>
+    <p>Maria Bravo (based on material shown in &quot;Data Mining and Business Analytics with R&quot; Ledolter(2013))<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Prediction using a prostate cancer dataset</h2>
+  </hgroup>
+  <article data-timings="10">
+    <h3>Decision trees</h3>
+
+<ul>
+<li>Use a tree-logic to make predictions. We talk about classification trees if the response is categorical; we talk about regression trees if the response is continuous.</li>
+<li>Regression trees try to predict a (numeric) mean response at the leaves of the tree, such as the expected amount of rain in inches, or the expected default rate on loans.</li>
+</ul>
+
+<h3>The prostate cancer dataset</h3>
+
+<ul>
+<li>The data, taken from Stamey et al. (1989), contains the results of biopsies on 97 men of various ages.The biopsy information includes:
+
+<ul>
+<li>Gleason score (gleason): in this data set, the range is from 6 to 9.</li>
+<li>Prostate-specific antigen (psa): laboratory results on protein production.</li>
+<li>Capsular penetration (cp): reach of cancer into the gland lining.</li>
+<li>Benign prostatic hyperplasia amount (bph): size of the prostate.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The application</h2>
+  </hgroup>
+  <article data-timings="">
+    <p style="font-size:18px">
+This application predicts the prostate cancer tumor logarithm volume (lcavol) using five covariates (age, log of bph, log of cp, log of psa, the Gleason score) and the regression tree method. The values of lbph, lcp and lpsa must be entered as logarithms. The logarithm volume value for the tumor is displayed in cubic centimeters.
+</p>
+
+<p><img src="Screenshot.png"  width="700" height="450"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>Explaining the prediction model</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">prostate &lt;- read.csv(&quot;prostate.csv&quot;)
+library(tree)
+pstree &lt;- tree(lcavol ~ ., data = prostate, mincut = 1)
+</code></pre>
+
+<ul>
+<li><p>We obtain a tree with 12 leaf nodes, the graph shows the nodes and how they are split. </p></li>
+<li><p>Take a patient, 65 years old and with lcp = 2. What is his prediction of log tumor size? Looking at the splits on the tree, you go right on the first split (lcp &gt; 0.261624), left on the second split (lcp &lt; 2.13963), and right on the third split (age &gt; 62.5): the model predicts 2.30 for his log volume.</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="class" id="id" style="background:;">
+  <hgroup>
+    <h2>The regression tree</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">plot(pstree, col = 12, cex = 2)
+text(pstree, digits = 2, cex = 0.7, all = TRUE)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Prediction using a prostate cancer dataset'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The application'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Explaining the prediction model'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='The regression tree'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
